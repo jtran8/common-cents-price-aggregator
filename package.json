@@ -1,0 +1,23 @@
+{
+  "name": "common_cents",
+  "version": "1.0.0",
+  "description": "common_cents package manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtran8/common-cents-price-aggregator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jtran8/common-cents-price-aggregator/issues"
+  },
+  "homepage": "https://github.com/jtran8/common-cents-price-aggregator#readme",
+  "devDependencies": {
+    "express-handlebars": "^4.0.3",
+    "mariadb": "^2.3.1"
+  }
+}
