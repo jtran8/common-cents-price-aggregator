@@ -1,0 +1,44 @@
+body {
+  background-color: rgb(149, 203, 202) !important;
+}
+
+nav {
+  background-color: #41b3a3 !important;
+  box-shadow: 1px 2px 4px #c38d9e;
+}
+
+.jumbotron {
+  background-color: #41b3a3 !important;
+  box-shadow: 1px 2px 4px #c38d9e;
+}
+
+.filter {
+  background-color: #e27d60 !important;
+  box-shadow: 1px 2px 4px #c38d9e;
+}
+
+.search-form {
+  max-width: 500px;
+  margin: auto;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid #e8a87c !important;
+}
+
+.jumbotron hr {
+  border-top: 1px solid white !important;
+}
+
+.jumbotron p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cc {
+  font-family: 'Pacifico', cursive;
+  color: white;
+  text-shadow: 3px 3px #c38d9e;
+}
