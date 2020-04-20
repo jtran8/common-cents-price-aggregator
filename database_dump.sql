@@ -149,7 +149,7 @@ CREATE TABLE `productRetailer` (
 CREATE TABLE `retailer` (
   `retailerId` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `url` varchar(254) NOT NULL
+  `url` varchar(2048) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
