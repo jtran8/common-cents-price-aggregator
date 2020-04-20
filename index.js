@@ -28,6 +28,23 @@ const exampleResults = {
   ]
 };
 
+// get searched product from database
+const queryByProductName = async (itemName) => {
+  try {
+    const resp = await axios.get('http://flip1.engr.oregonstate.edu:19830/', {
+      params : {
+        product : itemName,
+        timeout : 500
+      }
+    });
+    const data = resp.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 // the contents of the home screen and instructions
 const introJumbotron = `
 <div class="container">
@@ -116,7 +133,7 @@ const resultsTemplate = ({ itemSearched, imageUrl, msrp, results }) => {
                     <div class="container result-box text-center">
                         <div class="container">
                             <p class="lead">lowest</p>
-                            <h5>$${findLowest(results)}</h5>
+                            <p class="price">$${findLowest(results)}</p>
                         </div>
                     </div>
                 </div>
@@ -124,7 +141,7 @@ const resultsTemplate = ({ itemSearched, imageUrl, msrp, results }) => {
                     <div class="container result-box text-center">
                         <div class="container">
                             <p class="lead">average</p>
-                            <h5>$${findAvg(results)}</h5>
+                            <p class="price">$${findAvg(results)}</p>
                         </div>
                     </div>
                 </div>
@@ -132,7 +149,7 @@ const resultsTemplate = ({ itemSearched, imageUrl, msrp, results }) => {
                     <div class="container result-box text-center">
                         <div class="container">
                             <p class="lead">msrp</p>
-                            <h5>$${msrp}</h5>
+                            <p class="price">$${msrp}</p>
                         </div>
                     </div>
                 </div>
@@ -155,16 +172,23 @@ const root = document.querySelector('#root');
 // to detect searches
 const searchBar = document.querySelector('#search-bar');
 
-// a temporary function to simulate a search for iphone 11
-const temporaryInputFunc = () => {
-  if (searchBar.value === 'iPhone 11') {
-    root.innerHTML = resultsTemplate(exampleResults);
-  } else if (searchBar.value === '') {
+// search for whatever is in the text box
+// todo: search not found functionaliy
+const search = async () => {
+  if (searchBar.value === '') {
     root.innerHTML = introJumbotron;
+  }
+  const data = await queryByProductName(searchBar.value);
+  if (data) {
+    root.innerHTML = resultsTemplate(data);
+  } else {
+    root.innerHTML = 'not in database yet';
   }
 };
 
 // event listener to tell when a search is happening
-searchBar.addEventListener('input', temporaryInputFunc);
+searchBar.addEventListener('input', debounce(search, 500));
 // initial make the root the intro jumbotron
 root.innerHTML = introJumbotron;
+
+//http://flip1.engr.oregonstate.edu:19829/?product=iPhone%2011

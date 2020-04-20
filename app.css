@@ -57,6 +57,13 @@ hr {
 
 .result-box p {
   color: black;
+  font-size: 1em;
+}
+
+.result-box .price {
+  font-size: 1.2em;
+  color: white;
+  text-shadow: 2px 2px #c38d9e;
 }
 
 .result-confirm h4 {
