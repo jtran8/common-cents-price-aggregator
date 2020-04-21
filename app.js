@@ -1,7 +1,15 @@
 const express = require('express');
 const mariadb = require('./dbcon.js');
-const app = express()
-const port = 19829
+const app = express();
+const port = 19829;
+const PriceFinder = require('price-finder');
+const priceFinder = new PriceFinder();
+ 
+// Atoms for Peace : Amok  (from Amazon)
+const uri = 'https://www.target.com/p/samsung-65-34-smart-4k-hdr-uhd-tv-glossy-black-un65nu6900/-/A-53832609';
+priceFinder.findItemPrice(uri, function(err, price) {
+    console.log(price); // 8.91
+});
 
 app.get('/', (req, res) => {
     let resp = {}
