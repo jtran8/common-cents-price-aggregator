@@ -1,0 +1,29 @@
+-- Search page queries
+
+--- 1st filter: retailer
+
+SELECT * FROM retailer ORDER BY name ASC;
+
+--- 2nd filter: category
+
+SELECT * FROM category ORDER BY name ASC;
+
+--- 3rd filter: brand
+
+SELECT brand.brandId, name 
+FROM brand 
+INNER JOIN categoryBrand 
+ON brand.brandId=categoryBrand.brandId 
+WHERE categoryBrand.catId='UserSelectedCategory'
+ORDER BY name ASC;
+
+--- Products
+
+SELECT *
+FROM product 
+INNER JOIN brandProduct
+ON product.prodId=brandProduct.prodId
+WHERE brandProduct.brandId='UserSelectedBrand'
+ORDER BY name ASC;
+
+-- Results page queries
