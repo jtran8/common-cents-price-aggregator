@@ -1,3 +1,5 @@
+import { debounce, findLowest, findAvg } from './utils';
+import queries from './queries';
 // example object to represent the api call to the database
 const exampleResults = {
   itemSearched : 'iPhone 11',
@@ -26,23 +28,6 @@ const exampleResults = {
       url      : 'https://www.target.com/p/apple-iphone-11/-/A-78052843'
     }
   ]
-};
-
-// get searched product from database
-const queryByProductName = async (itemName) => {
-  try {
-    const resp = await axios.get('http://flip1.engr.oregonstate.edu:19830/', {
-      params : {
-        product : itemName,
-        timeout : 500
-      }
-    });
-    const data = resp.data;
-    return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 };
 
 // the contents of the home screen and instructions
@@ -93,28 +78,6 @@ const genTable = (results) => {
   `);
 
   return table;
-};
-
-// return the lowest price in the array
-const findLowest = (results) => {
-  let lowest = results[0].price;
-  for (result of results) {
-    if (result.price < lowest) {
-      lowest = result.price;
-    }
-  }
-  return lowest;
-};
-
-// return the average price in the array
-const findAvg = (results) => {
-  let sum = 0.0;
-  let count = 0;
-  for (result of results) {
-    sum += result.price;
-    count++;
-  }
-  return (sum / count).toFixed(2);
 };
 
 // return the html for the entire results section
@@ -175,15 +138,16 @@ const searchBar = document.querySelector('#search-bar');
 // search for whatever is in the text box
 // todo: search not found functionaliy
 const search = async () => {
-  if (searchBar.value === '') {
-    root.innerHTML = introJumbotron;
-  }
-  const data = await queryByProductName(searchBar.value);
-  if (data) {
-    root.innerHTML = resultsTemplate(data);
-  } else {
-    root.innerHTML = 'not in database yet';
-  }
+  // if (searchBar.value === '') {
+  //   root.innerHTML = introJumbotron;
+  // }
+  // const data = await queries.queryByProductName(searchBar.value);
+  // if (data) {
+  //   root.innerHTML = resultsTemplate(data);
+  // } else {
+  //   root.innerHTML = 'not in database yet';
+  // }
+  root.innerHTML = resultsTemplate(exampleResults);
 };
 
 // event listener to tell when a search is happening
