@@ -1,5 +1,3 @@
-import { debounce, findLowest, findAvg } from './utils';
-import queries from './queries';
 // example object to represent the api call to the database
 const exampleResults = {
   itemSearched : 'iPhone 11',

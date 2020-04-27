@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // get searched product from database
 const queryByProductName = async (itemName) => {
   try {
