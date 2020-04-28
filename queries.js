@@ -43,6 +43,10 @@ const queryBrandsByCategory = async (category) => {
       return [ 'samsung', 'sony', 'vizio', 'lg' ];
     } else if (category === 'cell phones') {
       return [ 'apple', 'samsung', 'lg', 'google' ];
+    } else if (category === 'shoes') {
+      return [ 'nike', 'adidas', 'new balance', 'converse' ];
+    } else if (category === 'games') {
+      return [ 'xbox', 'playstation', 'nintendo' ];
     }
   } catch (error) {
     console.log(error);

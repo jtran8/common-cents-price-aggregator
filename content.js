@@ -132,6 +132,7 @@ const filterTemplate = ({ categories, brands }) => {
                         <div class="col">
                             <select class="form-control form-control-sm" id="brand">
                               <option selected disabled>brands</option>
+                              <option disabled>select a category first</option>
                             </select>
                         </div>
                     </div>
