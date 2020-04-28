@@ -7,7 +7,7 @@ nav {
   box-shadow: 1px 2px 4px #c38d9e;
 }
 
-.jumbotron {
+.top-level-bg {
   background-color: #41b3a3 !important;
   box-shadow: 1px 2px 4px #c38d9e;
 }
@@ -27,6 +27,11 @@ nav {
   margin: auto;
 }
 
+.filter-form {
+  max-width: 500px;
+  margin: auto;
+}
+
 hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -38,7 +43,7 @@ hr {
   border-top: 1px solid white !important;
 }
 
-.jumbotron p {
+.light-text {
   color: rgba(255, 255, 255, 0.7);
 }
 
