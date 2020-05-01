@@ -7,14 +7,15 @@ var app = express();
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
 
+// Enable CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // Set up paths
 app.use('/', require('./filters.js'));
-
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next()
-});
  
 // Set up error-handling
 app.use(function(req,res){
