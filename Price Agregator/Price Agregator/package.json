@@ -1,0 +1,9 @@
+{
+  "name": "price-agregator",
+  "version": "0.0.0",
+  "description": "Price Agregator",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
