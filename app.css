@@ -32,6 +32,10 @@ nav {
   margin: auto;
 }
 
+#filter-options label {
+  font-size: small;
+}
+
 hr {
   margin-top: 1rem;
   margin-bottom: 1rem;

@@ -102,7 +102,7 @@ const resultsTemplate = ({ itemSearched, imageUrl, msrp, results }) => {
 const genCategoryDropDown = (list) => {
   let options = '';
   for (const item of list) {
-    options += `<option value="${item}">${item}</option>`;
+    options += `<option id="${item.catId}">${item.name}</option>`;
   }
   return options;
 };
@@ -111,7 +111,16 @@ const genCategoryDropDown = (list) => {
 const genBrandsDropDown = (list) => {
   let options = '<option selected disabled>brands</option>';
   for (const item of list) {
-    options += `<option value="${item}">${item}</option>`;
+    options += `<option id="${item.brandId}">${item.name}</option>`;
+  }
+  return options;
+};
+
+// create the dropdown options for the products
+const genProductsDropDown = (list) => {
+  let options = '<option selected disabled>products</option>';
+  for (const item of list) {
+    options += `<option id="${item.upc}">${item.name}</option>`;
   }
   return options;
 };
@@ -124,17 +133,28 @@ const filterTemplate = ({ categories, brands }) => {
                 <form class="form ">
                     <div class="row">
                         <div class="col">
-                            <select class="form-control form-control-sm" id="category">
-                              <option selected disabled>categories</option>
-                                ${genCategoryDropDown(categories)}
-                            </select>
+                          <label class="light-text" for="category">step 1, choose a category</label>
+                          <select class="form-control form-control-sm" id="category">
+                            <option selected disabled>categories</option>
+                              ${genCategoryDropDown(categories.categories)}
+                          </select>
                         </div>
                         <div class="col">
-                            <select class="form-control form-control-sm" id="brand">
-                              <option selected disabled>brands</option>
-                              <option disabled>select a category first</option>
-                            </select>
+                          <label class="light-text" for="brand">step 2, choose a brand</label>
+                          <select class="form-control form-control-sm" id="brand">
+                            <option selected disabled>brands</option>
+                            <option disabled>select a category first</option>
+                          </select>
                         </div>
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col">
+                        <label class="light-text" for="brand">step 3, choose a product</label>
+                        <select class="form-control form-control-sm" id="product">
+                          <option selected disabled>products</option>
+                          <option disabled>select a brand first</option>
+                        </select>
+                      </div>
                     </div>
                 </form>
             </div>

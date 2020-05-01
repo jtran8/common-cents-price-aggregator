@@ -1,3 +1,0 @@
-C:\Users\sluss\Documents\Oregon State\CS 361\common-cents-price-aggregator\Price Agregator\Price Agregator\obj\Debug\Price Agregator.njsprojAssemblyReference.cache
-C:\Users\sluss\Documents\Oregon State\CS 361\common-cents-price-aggregator\Price Agregator\Price Agregator\obj\Debug\Price Agregator.njsproj.CoreCompileInputs.cache
-C:\Users\sluss\Documents\Oregon State\CS 361\common-cents-price-aggregator\Price Agregator\Price Agregator\bin\Microsoft.NodejsTools.WebRole.dll
