@@ -9,11 +9,8 @@ let filters = {};
 
 // search for whatever is in the text box
 // todo: search not found functionaliy
-const search = async () => {
-  if (searchBar.value === '') {
-    root.innerHTML = introJumbotron;
-  }
-  const data = await queryByProductName(searchBar.value);
+const search = async (name) => {
+  const data = await queryByProductName(name);
   if (data) {
     root.innerHTML = resultsTemplate(data);
   } else {
@@ -44,6 +41,11 @@ const displayFilters = async () => {
       const products = await queryProductsByCategoryAndBrand(catId, brandId);
       const productSelect = document.querySelector('#product');
       productSelect.innerHTML = genProductsDropDown(products.products);
+      productSelect.addEventListener('change', async (e) => {
+        const productOptions = e.target.options;
+        const productName = productOptions[productOptions.selectedIndex].value;
+        search(productName);
+      });
     });
   });
 };
