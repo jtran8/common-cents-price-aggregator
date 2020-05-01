@@ -31,7 +31,7 @@ module.exports = function(){
     }
 
     function getProducts(res, mysql, context, category, brand, complete){
-        var sql = "SELECT name, upc FROM products WHERE brandId=? AND catId=? ORDER BY name ASC;";
+        var sql = "SELECT name, upc FROM products WHERE catId=? AND brandId=? ORDER BY name ASC;";
         var inserts = [category, brand];
 
         mysql.pool.query(sql, inserts, function(error, results, fields){
