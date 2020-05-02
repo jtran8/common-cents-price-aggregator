@@ -38,7 +38,7 @@ const queryBrandsByCategory = async (catId) => {
 
 const queryProductsByCategoryAndBrand = async (catId, brandId) => {
   try {
-    const resp = await axios.get(`${dbURL}/${catId}/${brandId}`);
+    const resp = await axios.get(`${dbURL}/0${catId}/${brandId}`);
     return resp.data;
   } catch (error) {
     console.log(error);

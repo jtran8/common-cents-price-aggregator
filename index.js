@@ -20,38 +20,47 @@ const search = async (name) => {
 };
 
 // event handler for when filter is pressed
-// TODO: if filters are applied change query
+// TODO: ALOT OF REFACTORING
 const displayFilters = async () => {
+  // get all categories
   const categories = await queryAllCategories();
-  //   const categories = 'await queryAllCategories();';
+  // display filters interface
   filterOptions.innerHTML = filterTemplate({ categories });
+
+  // add event listener for selecting categories
   const categorySelect = document.querySelector('#category');
   categorySelect.addEventListener('change', async (e) => {
+    // get the selected category's id
     const catOptions = e.target.options;
     const catId = catOptions[catOptions.selectedIndex].id;
-    filters.category = catId;
+    // query brands by category id
     const brands = await queryBrandsByCategory(catId);
-    console.log(brands.brands);
+    // update brands dropdown
     const brandSelect = document.querySelector('#brand');
     brandSelect.innerHTML = genBrandsDropDown(brands.brands);
+
+    // add event listener for selecting brands
     brandSelect.addEventListener('change', async (e) => {
+      // get the selected brand's id
       const brandOptions = e.target.options;
       const brandId = brandOptions[brandOptions.selectedIndex].id;
-      filters.brand = brandId;
+      // query prodcuts by category and brand id
       const products = await queryProductsByCategoryAndBrand(catId, brandId);
+      // update products dropdown
       const productSelect = document.querySelector('#product');
       productSelect.innerHTML = genProductsDropDown(products.products);
+
+      // add event listener for selecting a product
       productSelect.addEventListener('change', async (e) => {
         const productOptions = e.target.options;
         const productName = productOptions[productOptions.selectedIndex].value;
+        // when the product is selected - search the database for that product
+        // search updates to the result page
         search(productName);
       });
     });
   });
 };
-
-// event listener to tell when a search is happening
-//searchBar.addEventListener('input', debounce(search, 500));
 
 displayFilters();
 

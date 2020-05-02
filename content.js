@@ -125,6 +125,22 @@ const genProductsDropDown = (list) => {
   return options;
 };
 
+const defaultBrandHtml = `
+<label class="light-text" for="brand">step 2, choose a brand</label>
+<select class="form-control form-control-sm" id="brand">
+  <option selected disabled>brands</option>
+  <option disabled>select a category first</option>
+</select>
+`;
+
+const defaultProductHtml = `
+<label class="light-text" for="brand">step 3, choose a product</label>
+<select class="form-control form-control-sm" id="product">
+  <option selected disabled>products</option>
+  <option disabled>select a brand first</option>
+</select>
+`;
+
 // template for filter options
 const filterTemplate = ({ categories, brands }) => {
   return `
@@ -140,20 +156,12 @@ const filterTemplate = ({ categories, brands }) => {
                           </select>
                         </div>
                         <div class="col">
-                          <label class="light-text" for="brand">step 2, choose a brand</label>
-                          <select class="form-control form-control-sm" id="brand">
-                            <option selected disabled>brands</option>
-                            <option disabled>select a category first</option>
-                          </select>
+                          ${defaultBrandHtml}
                         </div>
                     </div>
                     <div class="row mt-4">
                       <div class="col">
-                        <label class="light-text" for="brand">step 3, choose a product</label>
-                        <select class="form-control form-control-sm" id="product">
-                          <option selected disabled>products</option>
-                          <option disabled>select a brand first</option>
-                        </select>
+                        ${defaultProductHtml}
                       </div>
                     </div>
                 </form>
