@@ -33,62 +33,60 @@ const findAvg = (results) => {
 };
 
 function swap(array, index1, index2) {
-    [array[index1], array[index2]] = [array[index2], array[index1]];
-};
+  [ array[index1], array[index2] ] = [ array[index2], array[index1] ];
+}
 
 //Calculate the total saved from the highest priced store.
 const savings = (results) => {
-    //Find the highest price. 
-    var highestPrice = results[0].price;
-    for (result of results) {
-        if (result.price > highestPrice) {
-            highestPrice = result.price;
-        }
+  //Find the highest price.
+  var highestPrice = results[0].price;
+  for (result of results) {
+    if (result.price > highestPrice) {
+      highestPrice = result.price;
     }
-    //Calculate the amount saved for each store and round to two decimal places. 
-    for (var i = 0; i < results.length; i++) {
-        results[i].savings = (highestPrice - results[i].price).toFixed(2);
-    }
+  }
+  //Calculate the amount saved for each store and round to two decimal places.
+  for (var i = 0; i < results.length; i++) {
+    results[i].savings = (highestPrice - results[i].price).toFixed(2);
+  }
 
-    return results;
-}
+  return results;
+};
 
-//Organizes prices in descending order. 
+//Organizes prices in descending order.
 const descendingPrice = (results) => {
-    //Decreases number of comparisons as array is sorted to make algorithm more efficient. 
-    for (var i = results.length; i > 0; i--) {
-        for (var j = 0; j < i - 1; j++) {
-            if (results[j].price < results[j + 1].price) {
-                swap(results, j, j + 1);
-            }
-        }
-    }
-    savings(results);
-    return results;
+  return results.sort((a, b) => a.price - b.price);
 };
 
-//Sort prices in ascending order. 
+//Sort prices in ascending order.
 const ascendingPrice = (results) => {
-    for (var i = results.length; i > 0; i--) {
-        for (var j = 0; j < i - 1; j++) {
-            if (results[j].price > results[j + 1].price) {
-                swap(results, j, j + 1);
-            }
-        }
-    }
-    savings(results);
-    return results;
+  return results.sort((a, b) => b.price - a.price);
 };
 
-//Sort list of prices alphabetically by retailer. 
-const alphabetSort = (results) => {
-    for (var i = results.length; i > 0; i--) {
-        for (var j = 0; j < i - 1; j++) {
-            if (results[j].retailer > results[j + 1].retailer) {
-                swap(results, j, j + 1);
-            }
-        }
+//Sort list of prices alphabetically by retailer.
+const alphabetSortAsc = (results) => {
+  return results.sort((a, b) => {
+    const aName = a.name.toUpperCase();
+    const bName = b.name.toUpperCase();
+    if (aName < bName) {
+      return -1;
+    } else if (aName > bName) {
+      return 1;
     }
-    savings(results);
-    return results;
+    return 0;
+  });
+};
+
+const alphabetSortDec = (results) => {
+  return results.sort((a, b) => {
+    const aName = a.name.toUpperCase();
+    const bName = b.name.toUpperCase();
+    console.log('dec');
+    if (aName < bName) {
+      return 1;
+    } else if (aName > bName) {
+      return -1;
+    }
+    return 0;
+  });
 };

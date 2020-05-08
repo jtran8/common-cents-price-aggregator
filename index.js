@@ -5,14 +5,47 @@ const root = document.querySelector('#root');
 
 const filterOptions = document.querySelector('#filter-options');
 const filterButton = document.querySelector('#filter-button');
-let filters = {};
+const sorts = {
+  retailer : false,
+  price    : true
+};
+
+const onRetailerSortClick = (data) => {
+  sorts.retailer = !sorts.retailer;
+  let sortedData;
+  if (sorts.retailer) {
+    sortedData = alphabetSortAsc(data.prices);
+  } else {
+    sortedData = alphabetSortDec(data.prices);
+  }
+  const table = document.querySelector('#results-table-body');
+  table.innerHTML = genTableBody(sortedData);
+};
+
+const onPriceSortClick = (data) => {
+  sorts.price = !sorts.price;
+  let sortedData;
+  if (sorts.price) {
+    sortedData = ascendingPrice(data.prices);
+  } else {
+    sortedData = descendingPrice(data.prices);
+  }
+  const table = document.querySelector('#results-table-body');
+  table.innerHTML = genTableBody(sortedData);
+};
 
 // search for whatever is in the text box
 // todo: search not found functionaliy
-const search = async (name) => {
-  const data = await queryByProductName(name);
+const search = async (upc, productName) => {
+  const data = await queryByUPC(upc);
   if (data) {
-    root.innerHTML = resultsTemplate(data);
+    root.innerHTML = tempResultsTemplate(data, productName);
+    const retailerSortButton = document.querySelector('#retailer-sort-button');
+    retailerSortButton.addEventListener('click', () =>
+      onRetailerSortClick(data)
+    );
+    const priceSortButton = document.querySelector('#price-sort-button');
+    priceSortButton.addEventListener('click', () => onPriceSortClick(data));
   } else {
     root.innerHTML = 'not in database yet';
   }
@@ -53,10 +86,11 @@ const displayFilters = async () => {
       // add event listener for selecting a product
       productSelect.addEventListener('change', async (e) => {
         const productOptions = e.target.options;
+        const productUPC = productOptions[productOptions.selectedIndex].id;
         const productName = productOptions[productOptions.selectedIndex].value;
         // when the product is selected - search the database for that product
         // search updates to the result page
-        search(productName);
+        search(productUPC, productName);
       });
     });
   });

@@ -1,12 +1,10 @@
-const dbURL = 'http://flip3.engr.oregonstate.edu:11122';
+const filtersURL = 'http://flip3.engr.oregonstate.edu:11122/filters';
+const resultsURL = 'http://flip3.engr.oregonstate.edu:11122/results';
 // get searched product from database
-const queryByProductName = async (itemName) => {
+const queryByUPC = async (upc) => {
   try {
-    const resp = await axios.get(dbURL, {
-      params : {
-        product : itemName
-      }
-    });
+    const resp = await axios.get(`${resultsURL}/${upc}`);
+    console.log(resp.data);
     const data = resp.data;
     return data;
   } catch (error) {
@@ -17,8 +15,7 @@ const queryByProductName = async (itemName) => {
 
 const queryAllCategories = async () => {
   try {
-    const resp = await axios.get(dbURL);
-    console.log(resp.data);
+    const resp = await axios.get(filtersURL);
     return resp.data;
   } catch (error) {
     console.log(error);
@@ -28,7 +25,7 @@ const queryAllCategories = async () => {
 
 const queryBrandsByCategory = async (catId) => {
   try {
-    const resp = await axios.get(`${dbURL}/${catId}`);
+    const resp = await axios.get(`${filtersURL}/${catId}`);
     return resp.data;
   } catch (error) {
     console.log(error);
@@ -38,7 +35,7 @@ const queryBrandsByCategory = async (catId) => {
 
 const queryProductsByCategoryAndBrand = async (catId, brandId) => {
   try {
-    const resp = await axios.get(`${dbURL}/0${catId}/${brandId}`);
+    const resp = await axios.get(`${filtersURL}/0${catId}/${brandId}`);
     return resp.data;
   } catch (error) {
     console.log(error);

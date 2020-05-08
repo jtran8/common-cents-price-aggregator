@@ -107,3 +107,11 @@ hr {
 .table thead th {
   border-bottom: 2px solid rgb(149, 203, 202) !important;
 }
+
+.filter.btn {
+  padding: 0;
+}
+
+.filter.btn i {
+  margin: 4px 6px;
+}
