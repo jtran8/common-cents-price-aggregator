@@ -22,4 +22,8 @@ SELECT name, upc FROM products WHERE catId=? AND brandId=? ORDER BY name ASC;
 
 --- Retrieve product info
 
-SELECT R.name, price, url FROM productRetailer AS PR INNER JOIN retailers AS R ON R.retailerId=PR.retailerId WHERE PR.upc=?;
+SELECT R.name, price, url 
+FROM productRetailer 
+AS PR INNER JOIN retailers 
+AS R ON R.retailerId=PR.retailerId 
+WHERE PR.upc=?;
