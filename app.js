@@ -4,7 +4,7 @@ var mysql = require('./dbcon.js');
 
 // Set up express
 var app = express();
-app.set('port', process.argv[2]);
+app.set('port', 3000);
 app.set('mysql', mysql);
 
 app.use(function(req, res, next) {
