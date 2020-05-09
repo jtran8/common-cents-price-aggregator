@@ -4,7 +4,6 @@ var mysql = require('./dbcon.js');
 
 // Set up express
 var app = express();
-app.set('port', process.argv[2]);
 app.set('mysql', mysql);
 
 app.use(function(req, res, next) {
@@ -31,6 +30,5 @@ app.use(function(err, req, res, next){
   res.render('500');
 });
 
-app.listen(app.get('port'), function(){
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-});
+app.listen(process.env.PORT || 22222, 
+  () => console.log("Server is running..."));
