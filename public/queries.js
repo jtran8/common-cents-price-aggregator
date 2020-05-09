@@ -1,5 +1,5 @@
-const filtersURL = 'https://common-cents-team18.herokuapp.com/filters';
-const resultsURL = 'https://common-cents-team18.herokuapp.com/results';
+const filtersURL = '/filters';
+const resultsURL = '/results';
 // get searched product from database
 const queryByUPC = async (upc) => {
   try {
