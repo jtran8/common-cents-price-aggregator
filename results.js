@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getPrices(res, mysql, context, upc, complete){
-        var sql = "SELECT R.name, price, url FROM productRetailer AS PR INNER JOIN retailers AS R ON R.retailerId=PR.retailerId WHERE PR.upc=?";
+        var sql = "SELECT R.name, price, url FROM productRetailer AS PR INNER JOIN retailers AS R ON R.retailerId=PR.retailerId WHERE PR.upc=? ORDER BY price ASC";
         var inserts = [upc];
 
         mysql.pool.query(sql, inserts, function(error, results, fields){
