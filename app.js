@@ -30,5 +30,5 @@ app.use(function(err, req, res, next){
   res.render('500');
 });
 
-app.listen(process.env.PORT || 3000, 
+app.listen(process.env.PORT || 22222, 
   () => console.log("Server is running..."));
