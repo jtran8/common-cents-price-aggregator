@@ -1,21 +1,36 @@
-const express = require('express');
-//const mariadb = require('./dbcon.js');
-const app = express();
-const port = 19829;
-const PriceFinder = require('price-finder');
-const priceFinder = new PriceFinder();
+// Require neccessary packages
+var express = require('express');
+var mysql = require('./dbcon.js');
 
-//Atoms for Peace : Amok  (from Amazon)
-const uris = [
-  'https://www.samsclub.com/p/switch-nintendo-switch/prod23652009?CAWELAID=730010300002297196&pid=_Aff_LS&siteID=jniXEdcEVNs-I.OfDgH1tO7vsZm5AMALCw&ranMID=38733&ranEAID=jniXEdcEVNs&ranSiteID=jniXEdcEVNs-I.OfDgH1tO7vsZm5AMALCw',
-  'https://www.techforless.com/cgi-bin/tech4less/sqlresults?id=9TCAN9x2',
-  'https://www.target.com/p/nintendo-switch-with-neon-blue-and-neon-red-joy-con/-/A-77464001?clkid=9f83bd1eN640011eabe2242010a246c14&lnm=201333&afid=priceviewer&ref=tgt_adv_xasd0002',
-  'https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/6364255.p?skuId=6364255'
-];
-priceFinder.findItemPrice(uris, function(err, price) {
-  console.log(price); // 8.91
+// Set up express
+var app = express();
+app.set('port', process.argv[2]);
+app.set('mysql', mysql);
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+// Set up paths
+app.use('/static', express.static('public'));
+app.use('/filters', require('./filters.js'));
+app.use('/results', require('./results.js'));
+app.use('/', express.static('public'));
+
+// Set up error-handling
+app.use(function(req,res){
+  res.status(404);
+  res.render('404');
+});
+
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500);
+  res.render('500');
+});
+
+app.listen(app.get('port'), function(){
+  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+});

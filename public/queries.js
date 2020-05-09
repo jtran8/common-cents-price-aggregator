@@ -1,5 +1,5 @@
-const filtersURL = 'http://flip3.engr.oregonstate.edu:11122/filters';
-const resultsURL = 'http://flip3.engr.oregonstate.edu:11122/results';
+const filtersURL = 'http://flip3.engr.oregonstate.edu:22222/filters';
+const resultsURL = 'http://flip3.engr.oregonstate.edu:22222/results';
 // get searched product from database
 const queryByUPC = async (upc) => {
   try {
