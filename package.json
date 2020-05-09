@@ -23,6 +23,6 @@
     "price-finder": "^5.0.2"
   },
   "scripts": {
-  "start": "node app.js"
+  "start": "node app.js 3000"
   }
 }
