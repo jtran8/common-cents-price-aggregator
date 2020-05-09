@@ -1,5 +1,5 @@
-const filtersURL = 'http://flip3.engr.oregonstate.edu:22222/filters';
-const resultsURL = 'http://flip3.engr.oregonstate.edu:22222/results';
+const filtersURL = 'https://common-cents-team18.herokuapp.com/filters';
+const resultsURL = 'https://common-cents-team18.herokuapp.com/results';
 // get searched product from database
 const queryByUPC = async (upc) => {
   try {
