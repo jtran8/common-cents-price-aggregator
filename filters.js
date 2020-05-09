@@ -4,7 +4,7 @@ module.exports = function(){
 
     function getCategories(res, mysql, context, complete){
         mysql.pool.query(
-            "SELECT catId, name FROM categories ORDER BY name ASC;",
+            "SELECT catId, name FROM categories ORDER BY name ASC",
             function(error, results, fields){
                if(error){
                     res.write(JSON.stringify(error));
@@ -31,7 +31,7 @@ module.exports = function(){
     }
 
     function getProducts(res, mysql, context, category, brand, complete){
-        var sql = "SELECT name, upc FROM products WHERE catId=? AND brandId=? ORDER BY name ASC;";
+        var sql = "SELECT name, upc FROM products WHERE catId=? AND brandId=? ORDER BY name ASC";
         var inserts = [category, brand];
 
         mysql.pool.query(sql, inserts, function(error, results, fields){
