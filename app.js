@@ -21,13 +21,13 @@ app.use('/', express.static('public'));
 // Set up error-handling
 app.use(function(req,res){
   res.status(404);
-  res.render('404');
+  res.send('404 error');
 });
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
   res.status(500);
-  res.render('500');
+  res.send('500 error');
 });
 
 app.listen(process.env.PORT || 22222, 
