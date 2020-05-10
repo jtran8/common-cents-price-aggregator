@@ -1,5 +1,5 @@
-//This database connection is used to fetch the data requested by a user of the app.
-//The database user must have SELECT privileges on all tables.
+//This database connection is used to update the stored product data.
+//The database user must have at least SELECT, INSERT, and UPDATE privileges on all tables.
 var mysql = require('mysql');
 var pool = mysql.createPool({
   connectionLimit : 10,

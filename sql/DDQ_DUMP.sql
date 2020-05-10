@@ -2,7 +2,6 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: price-aggregator-backend.coxajyvhvlmg.us-east-1.rds.amazonaws.com:3306
 -- Generation Time: May 09, 2020 at 05:17 AM
 -- Server version: 10.2.21-MariaDB-log
 -- PHP Version: 7.2.29
