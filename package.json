@@ -4,7 +4,8 @@
   "description": "common_cents package manager",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "start-product-update": "node updater/upc_lookup.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,5 @@
     "forever": "^2.0.0",
     "mysql": "^2.8.0",
     "price-finder": "^5.0.2"
-  },
-  "scripts": {
-  "start": "node app.js"
   }
 }

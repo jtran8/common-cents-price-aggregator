@@ -1,35 +1,29 @@
-const express = require('express');
 const mariadb = require('./dbcon.js');
-const app = express();
-const port = 19829;
 
-/*mariadb.pool.query('SELECT * FROM productRetailer WHERE upc=3', function(err, rows, fields){
-  if (err) throw err;
-  console.log(rows.length === 0);
-});*/
+var numProds;
+var prods;
+var idx;
 
-mariadb.pool.query('SELECT upc FROM product', function(err, rows, fields){
+mariadb.pool.query('SELECT upc FROM products', function(err, rows, fields){
   if (err) throw err;
-  updateItem(rows[3].upc);
+  numProds = rows.length;
+  idx = 0;
+  prods = rows;
+  setInterval(updateItem, 865000);  //upcitemdb.com's free api only allows 100 calls per day. This is the proper interval to keep calls at that rate.
 });
 
 function insertUpdateProductRetailer(upc, sellerId, link, price){
-  //console.log(upc + ' ' + sellerId);
-  mariadb.pool.query('SELECT * FROM productRetailer WHERE upc=? AND retailerId=?', [upc, sellerId], function(err, rows, fields){
-    if (rows.length === 0){
-      mariadb.pool.query('INSERT INTO productRetailer (`upc`, `retailerId`, `price`, `url`) VALUES (?, ?, ?, ?)', [upc, sellerId, price, link], function(err, result){
-        if (err) throw err;
-      });
-    }
-    else if (rows.length == 1){
-      mariadb.pool.query('UPDATE productRetailer SET `price`=?, `url`=? WHERE `upc`=? AND `retailerId`=?', [price, link, upc, sellerId], function(err, result){
-        if (err) throw err;
-      });
-    }
+  mariadb.pool.query('INSERT INTO productRetailer (`upc`, `retailerId`, `price`, `url`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE price=?, url=?', [upc, sellerId, price, link, price, link], function(err, result){
+    if(err) throw err;
   });
 }
 
-function updateItem(upc){
+function updateItem(){
+  if (idx == numProds){
+    idx = 0
+  }
+
+  let upc = prods[idx].upc;
   const https = require('https');
   const options = {
     hostname: 'api.upcitemdb.com',
@@ -47,25 +41,24 @@ function updateItem(upc){
       res.on("end", () => {
         try {
             let item_results = JSON.parse(response);
+            //console.log(response);
             for (let i=0; i < item_results.items[0].offers.length; i++){
               let seller = item_results.items[0].offers[i];
               let sellerId;
-              mariadb.pool.query('SELECT * FROM retailer WHERE name=?', [seller.merchant], function(err, rows, fields){
-                if (rows.length === 0){
-                  mariadb.pool.query('INSERT INTO retailer (`name`) VALUES (?)', [seller.merchant], function(err, result){
-                    if (err) throw err;
-                    sellerId = result.insertId;
-                    insertUpdateProductRetailer(upc, result.insertId, seller.link, seller.price);
-                  });
-                }
-                else if (rows.length == 1){
+              mariadb.pool.query('INSERT INTO retailers (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=retailers.name', [seller.merchant, seller.merchant], function(err, result){
+                if(err) throw err;
+
+                mariadb.pool.query('SELECT retailerId FROM retailers WHERE name=?', [seller.merchant], function(err, rows, fields){
+                  if(err) throw err;
                   sellerId = rows[0].retailerId;
                   insertUpdateProductRetailer(upc, rows[0].retailerId, seller.link, seller.price);
-                }
+                });
               });
             }
+            idx +=1;
         } catch (error) {
             console.error(error.message);
+            idx +=1;
         };
       });
     })
@@ -76,5 +69,4 @@ function updateItem(upc){
     
     req.end()
 }
-
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+console.log("Running...");
