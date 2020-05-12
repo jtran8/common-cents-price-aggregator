@@ -7,33 +7,63 @@ products = [
   ['AirPods Pro', '190199246850', 'Apple', 'Headphones'],
 ];
 
-for (let i=0; i < products.length; i++){
-  let prod = products[i];
-  let brandId;
-  let catId;
-  mariadb.pool.query('INSERT INTO categories (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=?', [prod[3], prod[3]], function(err, result){
+for (let i=0; i < products.length; i++){  
+  ProductUpdate(products[i])
+}
+
+function ProductUpdate(prodArr){
+  let prod = {
+    name: prodArr[0],
+    upc: parseInt(prodArr[1]),
+    brand: prodArr[2],
+    cat: prodArr[3]
+  }
+  InsertIntoCategories(prod);
+}
+
+function InsertIntoCategories(prod){
+  mariadb.pool.query('INSERT INTO categories (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=name', [prod.name], function(err, result){
     if(err) throw err;
 
-    mariadb.pool.query('SELECT `catId`, `name` FROM `categories` WHERE name=?', [prod[3]], function(err, rows, fields){
-      if(err) throw err;
-      catId = rows[0].catId;
+    GetCategoryId(prod);
+  });
+}
 
-      mariadb.pool.query('INSERT INTO brands (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=?', [prod[2], prod[2]], function(err, result){
-        if(err) throw err;
+function GetCategoryId(prod) {
+  mariadb.pool.query('SELECT `catId`, `name` FROM `categories` WHERE name=?', [prod.name], function(err, rows, fields){
+    if(err) throw err;
+    prod.catId = rows[0].catId;
+    //let catId = rows[0].catId;
+    InsertIntoBrands(prod)
+  });
+}
 
-        mariadb.pool.query('SELECT `brandId`, `name` FROM `brands` WHERE name=?', [prod[2]], function(err, rows, fields){
-          if(err) throw err;
-          brandId = rows[0].brandId;
+function InsertIntoBrands(prod){
+  mariadb.pool.query('INSERT INTO brands (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=name', [prod.brand], function(err, result){
+    if(err) throw err;
+    GetBrandId(prod);
+  });
+}
 
-          mariadb.pool.query('INSERT INTO categoryBrand (`catId`, `brandId`) VALUES (?, ?) ON DUPLICATE KEY UPDATE catId=?, brandId=?', [catId, brandId, catId, brandId], function(err, result){
-            if(err) throw err;
-          });
+function GetBrandId(prod){
+  mariadb.pool.query('SELECT `brandId`, `name` FROM `brands` WHERE name=?', [prod.brand], function(err, rows, fields){
+    if(err) throw err;
+    prod.brandId = rows[0].brandId;
+    //brandId = rows[0].brandId;
 
-          mariadb.pool.query('INSERT INTO products (`name`, `upc`, `brandId`, `catId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE catId=?', [prod[0], parseInt(prod[1]), brandId, catId, catId], function(err, result){
-            if(err) throw err;
-          });
-        })
-      });
-    });
+    InsertIntoCategoryBrand(prod);
+    InsertIntoProducts(prod);
+  });
+}
+
+function InsertIntoCategoryBrand(prod){
+  mariadb.pool.query('INSERT INTO categoryBrand (`catId`, `brandId`) VALUES (?, ?) ON DUPLICATE KEY UPDATE catId=catId, brandId=brandId', [prod.catId, prod.brandId], function(err, result){
+    if(err) throw err;
+  });
+}
+
+function InsertIntoProducts(prod){
+  mariadb.pool.query('INSERT INTO products (`name`, `upc`, `brandId`, `catId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE catId=catId', [prod.name, prod.upc, prod.brandId, prod.catId], function(err, result){
+    if(err) throw err;
   });
 }
