@@ -22,7 +22,7 @@ function ProductUpdate(prodArr){
 }
 
 function InsertIntoCategories(prod){
-  mariadb.pool.query('INSERT INTO categories (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=name', [prod.name], function(err, result){
+  mariadb.pool.query('INSERT INTO categories (`name`) VALUES (?) ON DUPLICATE KEY UPDATE catId=catId', [prod.cat], function(err, result){
     if(err) throw err;
 
     GetCategoryId(prod);
@@ -30,16 +30,16 @@ function InsertIntoCategories(prod){
 }
 
 function GetCategoryId(prod) {
-  mariadb.pool.query('SELECT `catId`, `name` FROM `categories` WHERE name=?', [prod.name], function(err, rows, fields){
+  mariadb.pool.query('SELECT `catId`, `name` FROM `categories` WHERE name=?', [prod.cat], function(err, rows, fields){
     if(err) throw err;
     prod.catId = rows[0].catId;
     //let catId = rows[0].catId;
-    InsertIntoBrands(prod)
+    InsertIntoBrands(prod);
   });
 }
 
 function InsertIntoBrands(prod){
-  mariadb.pool.query('INSERT INTO brands (`name`) VALUES (?) ON DUPLICATE KEY UPDATE name=name', [prod.brand], function(err, result){
+  mariadb.pool.query('INSERT INTO brands (`name`) VALUES (?) ON DUPLICATE KEY UPDATE brandId=brandId', [prod.brand], function(err, result){
     if(err) throw err;
     GetBrandId(prod);
   });
@@ -49,7 +49,6 @@ function GetBrandId(prod){
   mariadb.pool.query('SELECT `brandId`, `name` FROM `brands` WHERE name=?', [prod.brand], function(err, rows, fields){
     if(err) throw err;
     prod.brandId = rows[0].brandId;
-    //brandId = rows[0].brandId;
 
     InsertIntoCategoryBrand(prod);
     InsertIntoProducts(prod);
