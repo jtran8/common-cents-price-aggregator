@@ -12,24 +12,14 @@ const debounce = (func, delay = 1000) => {
 
 // return the lowest price in the array
 const findLowest = (results) => {
-  let lowest = results[0].price;
-  for (result of results) {
-    if (result.price < lowest) {
-      lowest = result.price;
-    }
-  }
-  return lowest;
+  const prices = Array.from(results, (result) => results.price);
+  return Array.min(prices);
 };
 
 // return the average price in the array
 const findAvg = (results) => {
-  let sum = 0.0;
-  let count = 0;
-  for (result of results) {
-    sum += result.price;
-    count++;
-  }
-  return (sum / count).toFixed(2);
+  let sum = results.reduce((tot, res) => (tot += res.price));
+  return (sum / results.length).toFixed(2);
 };
 
 function swap(array, index1, index2) {
