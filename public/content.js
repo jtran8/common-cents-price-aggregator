@@ -163,28 +163,11 @@ const resultsTemplate = ({ itemSearched, imageUrl, msrp, results }) => {
 };
 
 // create the dropdown options for the categories
-const genCategoryDropDown = (list) => {
-  let options = '';
+const genDropDown = (list, listHead, id) => {
+  let options = listHead;
   for (const item of list) {
-    options += `<option id="${item.catId}">${item.name}</option>`;
-  }
-  return options;
-};
-
-// create the dropdown options for the brands
-const genBrandsDropDown = (list) => {
-  let options = '<option selected disabled>brands</option>';
-  for (const item of list) {
-    options += `<option id="${item.brandId}">${item.name}</option>`;
-  }
-  return options;
-};
-
-// create the dropdown options for the products
-const genProductsDropDown = (list) => {
-  let options = '<option selected disabled>products</option>';
-  for (const item of list) {
-    options += `<option id="${item.upc}">${item.name}</option>`;
+    console.log(options);
+    options += `<option id="${item[id]}">${item.name}</option>`;
   }
   return options;
 };
@@ -216,7 +199,7 @@ const filterTemplate = ({ categories, brands }) => {
                           <label class="light-text" for="category">step 1, choose a category</label>
                           <select class="form-control form-control-sm" id="category">
                             <option selected disabled>categories</option>
-                              ${genCategoryDropDown(categories.categories)}
+                              ${genDropDown(categories.categories, '', 'catId')}
                           </select>
                         </div>
                         <div class="col">

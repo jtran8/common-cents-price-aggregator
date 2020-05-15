@@ -62,40 +62,45 @@ const displayFilters = async () => {
 
   // add event listener for selecting categories
   const categorySelect = document.querySelector('#category');
-  categorySelect.addEventListener('change', async (e) => {
-    // get the selected category's id
-    const catOptions = e.target.options;
-    const catId = catOptions[catOptions.selectedIndex].id;
-    // query brands by category id
-    const brands = await queryBrandsByCategory(catId);
-    // update brands dropdown
-    const brandSelect = document.querySelector('#brand');
-    brandSelect.innerHTML = genBrandsDropDown(brands.brands);
-
-    // add event listener for selecting brands
-    brandSelect.addEventListener('change', async (e) => {
-      // get the selected brand's id
-      const brandOptions = e.target.options;
-      const brandId = brandOptions[brandOptions.selectedIndex].id;
-      // query prodcuts by category and brand id
-      const products = await queryProductsByCategoryAndBrand(catId, brandId);
-      // update products dropdown
-      const productSelect = document.querySelector('#product');
-      productSelect.innerHTML = genProductsDropDown(products.products);
-
-      // add event listener for selecting a product
-      productSelect.addEventListener('change', async (e) => {
-        const productOptions = e.target.options;
-        const productUPC = productOptions[productOptions.selectedIndex].id;
-        const productName = productOptions[productOptions.selectedIndex].value;
-        // when the product is selected - search the database for that product
-        // search updates to the result page
-        search(productUPC, productName);
-      });
-    });
-  });
+  categorySelect.addEventListener('change', async (e) => {categorySelectListener(e)});
 };
 
+async function categorySelectListener(e) {
+  // get the selected category's id
+  const catOptions = e.target.options;
+  const catId = catOptions[catOptions.selectedIndex].id;
+  // query brands by category id
+  const brands = await queryBrandsByCategory(catId);
+  // update brands dropdown
+  const brandSelect = document.querySelector('#brand');
+  brandSelect.innerHTML = genDropDown(brands.brands, '<option selected disabled>brands</option>', 'brandId');
+
+  // add event listener for selecting brands
+  brandSelect.addEventListener('change', async (e) => {brandSelectListener(e, catId)});
+}
+
+async function brandSelectListener(e, catId){
+  // get the selected brand's id
+  const brandOptions = e.target.options;
+  const brandId = brandOptions[brandOptions.selectedIndex].id;
+  // query prodcuts by category and brand id
+  const products = await queryProductsByCategoryAndBrand(catId, brandId);
+  // update products dropdown
+  const productSelect = document.querySelector('#product');
+  productSelect.innerHTML = genDropDown(products.products, '<option selected disabled>products</option>', 'upc');
+
+  // add event listener for selecting a product
+  productSelect.addEventListener('change', async (e) => {productSelectListener(e)});
+}
+
+async function productSelectListener(e){
+  const productOptions = e.target.options;
+  const productUPC = productOptions[productOptions.selectedIndex].id;
+  const productName = productOptions[productOptions.selectedIndex].value;
+  // when the product is selected - search the database for that product
+  // search updates to the result page
+  search(productUPC, productName);
+}
 displayFilters();
 
 // initial make the root the intro jumbotron
