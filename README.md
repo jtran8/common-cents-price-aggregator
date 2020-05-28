@@ -14,7 +14,7 @@ To run this app:
 This app uses a NodeJS/Express backend to serve HTML pages styled with Bootstrap. Data is stored using a mysql/MariaDB database.
 
 ### Front End Details
-(Christian)
+*Talk about how the front end works*
 
 ### Back End Details
 The server has three main responsibilities:
@@ -23,8 +23,10 @@ The server has three main responsibilities:
 * Adding new products
 
 #### Database Schema
+*Put a picture here*
 
 #### User-facing functions
+*Talk about what app.js does*
 
 #### Refreshing products
 This app pulls data from upcitemdb.com. Free users are limited to 100 calls per day, so the back end makes a call approximately every 15 minutes.
