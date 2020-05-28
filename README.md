@@ -14,7 +14,11 @@ To run this app:
 This app uses a NodeJS/Express backend to serve HTML pages styled with Bootstrap. Data is stored using a mysql/MariaDB database.
 
 ### Front End Details
-*Talk about how the front end works*
+The front end's core responsibilities are to allow the user to select a product they are interested in and then request the data from the back end API
+* Utilizing a chained dropdown system to narrow the selection of products for a user
+* Asynchronously fetch the data {image, prices, msrp} from the backend
+* Display the data in a js generated html table
+* Use event handlers to implement convenient tools for the user such as sorting by price, retailer or savings 
 
 ### Back End Details
 The server has three main responsibilities:
