@@ -64,6 +64,18 @@ hr {
   box-shadow: 1px 2px 4px #c38d9e;
 }
 
+#product-image {
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  align-items: center; /* vertical */
+  justify-content: center;
+}
+
+#product-image img {
+  height: auto;
+  width: auto;
+}
 .result-box p {
   color: black;
   font-size: 1em;

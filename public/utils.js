@@ -37,20 +37,8 @@ function swap(array, index1, index2) {
 }
 
 //Calculate the total saved from the highest priced store.
-const savings = (results) => {
-  //Find the highest price.
-  var highestPrice = results[0].price;
-  for (result of results) {
-    if (result.price > highestPrice) {
-      highestPrice = result.price;
-    }
-  }
-  //Calculate the amount saved for each store and round to two decimal places.
-  for (var i = 0; i < results.length; i++) {
-    results[i].savings = (highestPrice - results[i].price).toFixed(2);
-  }
-
-  return results;
+const savings = (msrp, price) => {
+  return (parseFloat(msrp) - parseFloat(price)).toFixed(2);
 };
 
 //Organizes prices in descending order.
@@ -81,7 +69,6 @@ const alphabetSortDec = (results) => {
   return results.sort((a, b) => {
     const aName = a.name.toUpperCase();
     const bName = b.name.toUpperCase();
-    console.log('dec');
     if (aName < bName) {
       return 1;
     } else if (aName > bName) {
