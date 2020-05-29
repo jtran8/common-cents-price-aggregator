@@ -27,7 +27,7 @@ The server has three main responsibilities:
 * Adding new products
 
 #### Database Schema
-*Put a picture here*
+![db schema](db_schema.png)
 
 #### User-facing functions
 *Talk about what app.js does*
