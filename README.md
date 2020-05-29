@@ -35,5 +35,7 @@ The server has three main responsibilities:
 #### Refreshing products
 This app pulls data from upcitemdb.com. Free users are limited to 100 calls per day, so the back end makes a call approximately every 15 minutes.
 
+<img src="link_price_update.png" alt="alt text" height="700">
+
 #### Adding new products
 Talk about the script that updates products
