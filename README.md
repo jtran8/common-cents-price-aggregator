@@ -14,7 +14,11 @@ To run this app:
 This app uses a NodeJS/Express backend to serve HTML pages styled with Bootstrap. Data is stored using a mysql/MariaDB database.
 
 ### Front End Details
-*Talk about how the front end works*
+The front end's core responsibilities are to allow the user to select a product they are interested in and then request the data from the back end API
+* Utilizing a chained dropdown system to narrow the selection of products for a user
+* Asynchronously fetch the data {image, prices, msrp} from the backend
+* Display the data in a js generated html table
+* Use event handlers to implement convenient tools for the user such as sorting by price, retailer or savings 
 
 ### Back End Details
 The server has three main responsibilities:
@@ -23,13 +27,15 @@ The server has three main responsibilities:
 * Adding new products
 
 #### Database Schema
-*Put a picture here*
+![db schema](db_schema.png)
 
 #### User-facing functions
 *Talk about what app.js does*
 
 #### Refreshing products
 This app pulls data from upcitemdb.com. Free users are limited to 100 calls per day, so the back end makes a call approximately every 15 minutes.
+
+<img src="link_price_update.png" alt="alt text" height="700">
 
 #### Adding new products
 Talk about the script that updates products
