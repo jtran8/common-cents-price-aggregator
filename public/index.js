@@ -1,10 +1,8 @@
 // where there will be chances made
 const root = document.querySelector('#root');
-// to detect searches
-//const searchBar = document.querySelector('#search-bar');
 
 const filterOptions = document.querySelector('#filter-options');
-const filterButton = document.querySelector('#filter-button');
+
 const sorts = {
   retailer : false,
   price    : true
@@ -19,7 +17,7 @@ const onRetailerSortClick = (data) => {
     sortedData = alphabetSortDec(data.prices);
   }
   const table = document.querySelector('#results-table-body');
-  table.innerHTML = genTableBody(sortedData);
+  table.innerHTML = genTableBody(sortedData, data.info.msrp);
 };
 
 const onPriceSortClick = (data) => {
@@ -31,25 +29,24 @@ const onPriceSortClick = (data) => {
     sortedData = descendingPrice(data.prices);
   }
   const table = document.querySelector('#results-table-body');
-  table.innerHTML = genTableBody(sortedData);
+  table.innerHTML = genTableBody(sortedData, data.info.msrp);
 };
 
-// search for whatever is in the text box
-// todo: search not found functionaliy
+const updateResultsSection = (data, productName) => {
+  root.innerHTML = resultsTemplate(data, productName);
+  const retailerSortButton = document.querySelector('#retailer-sort-button');
+  retailerSortButton.addEventListener('click', () => onRetailerSortClick(data));
+  const priceSortButton = document.querySelector('#price-sort-button');
+  priceSortButton.addEventListener('click', () => onPriceSortClick(data));
+  const savingSortButton = document.querySelector('#saving-sort-button');
+  savingSortButton.addEventListener('click', () => onPriceSortClick(data));
+};
+
+// search for product and set up html
+// search for product and set up html
 const search = async (upc, productName) => {
   const data = await queryByUPC(upc);
-  if (data) {
-    root.innerHTML = tempResultsTemplate(data, productName);
-    const retailerSortButton = document.querySelector('#retailer-sort-button');
-    retailerSortButton.addEventListener('click', () =>
-      onRetailerSortClick(data)
-    );
-    const priceSortButton = document.querySelector('#price-sort-button');
-    priceSortButton.addEventListener('click', () => onPriceSortClick(data));
-  } else {
-    root.innerHTML = 'not in database yet';
-  }
-  //root.innerHTML = resultsTemplate(exampleResults);
+  updateResultsSection(data, productName);
 };
 
 // event handler for when filter is pressed
@@ -62,7 +59,9 @@ const displayFilters = async () => {
 
   // add event listener for selecting categories
   const categorySelect = document.querySelector('#category');
-  categorySelect.addEventListener('change', async (e) => {categorySelectListener(e)});
+  categorySelect.addEventListener('change', async (e) => {
+    categorySelectListener(e);
+  });
 };
 
 async function categorySelectListener(e) {
@@ -73,13 +72,19 @@ async function categorySelectListener(e) {
   const brands = await queryBrandsByCategory(catId);
   // update brands dropdown
   const brandSelect = document.querySelector('#brand');
-  brandSelect.innerHTML = genDropDown(brands.brands, '<option selected disabled>brands</option>', 'brandId');
+  brandSelect.innerHTML = genDropDown(
+    brands.brands,
+    '<option selected disabled>brands</option>',
+    'brandId'
+  );
 
   // add event listener for selecting brands
-  brandSelect.addEventListener('change', async (e) => {brandSelectListener(e, catId)});
+  brandSelect.addEventListener('change', async (e) => {
+    brandSelectListener(e, catId);
+  });
 }
 
-async function brandSelectListener(e, catId){
+async function brandSelectListener(e, catId) {
   // get the selected brand's id
   const brandOptions = e.target.options;
   const brandId = brandOptions[brandOptions.selectedIndex].id;
@@ -87,13 +92,19 @@ async function brandSelectListener(e, catId){
   const products = await queryProductsByCategoryAndBrand(catId, brandId);
   // update products dropdown
   const productSelect = document.querySelector('#product');
-  productSelect.innerHTML = genDropDown(products.products, '<option selected disabled>products</option>', 'upc');
+  productSelect.innerHTML = genDropDown(
+    products.products,
+    '<option selected disabled>products</option>',
+    'upc'
+  );
 
   // add event listener for selecting a product
-  productSelect.addEventListener('change', async (e) => {productSelectListener(e)});
+  productSelect.addEventListener('change', async (e) => {
+    productSelectListener(e);
+  });
 }
 
-async function productSelectListener(e){
+async function productSelectListener(e) {
   const productOptions = e.target.options;
   const productUPC = productOptions[productOptions.selectedIndex].id;
   const productName = productOptions[productOptions.selectedIndex].value;
@@ -101,6 +112,7 @@ async function productSelectListener(e){
   // search updates to the result page
   search(productUPC, productName);
 }
+
 displayFilters();
 
 // initial make the root the intro jumbotron
