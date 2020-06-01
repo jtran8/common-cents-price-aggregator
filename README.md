@@ -30,7 +30,11 @@ The server has three main responsibilities:
 ![db schema](db_schema.png)
 
 #### User-facing functions
-*Talk about what app.js does*
+This section of the back end handles routing and requests from the front end for information from the database which include:
+* Returning all Categories
+* Returning all Brands in a Category
+* Returning all Products of a Brand in a Category
+* Returning user relevant information including prices at retailers for a Product 
 
 #### Refreshing products
 This app pulls data from upcitemdb.com. Free users are limited to 100 calls per day, so the back end makes a call approximately every 15 minutes.
