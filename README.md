@@ -7,7 +7,7 @@ To run this app:
 * npm install
 * Use 'sql/DDQ_DUMP.sql' to populate a mysql database with the necessary tables. This will also add some products with prices and urls.
 * Follow the instructions in dbcon.js and updater/dbcon.js to set up database connections.
-* (optional) 'npm run start-product-update' will run the script that updates product information. The api used to get the information limits free users to 100 calls per day. Therefore, one product will be updated approximately every 15 minutes.
+* (optional) 'npm run start-product-update' will run the script that updates product information. It works by screen-scraping various online retailers, with a random delay between 0 and 10 seconds between requests.
 * 'npm run start' will start the express server on port 22222 or process.env.port
 
 ## System Overview
