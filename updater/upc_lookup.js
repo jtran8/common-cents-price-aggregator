@@ -28,13 +28,15 @@ function getPrice(rows, idx){
     });
 
     let timeout = Math.floor(Math.random() * 10000);
-    console.log(timeout);
     console.log('');
 
     setTimeout(() => {getPrice(rows, idx+1)}, timeout);
   }
+  else{
+    console.log("finished");
+    process.exit();
+  }
 
-  console.log("finished");
 }
 
 console.log("Update started...");
